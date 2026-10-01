@@ -192,7 +192,7 @@ footer{border-top:1px solid var(--linha);margin-top:26px;padding-top:14px;font-s
   <div id="lista"></div>
   <footer>
     Painel atualizado em 1 de outubro de 2026, com o relatório de estoque e o relatório de pedidos de 30 de setembro de 2026 (dados sempre do dia anterior).
-    <b>Pronta entrega</b> = estoque disponível na Bitech (já líquido de reserva) − reservados aguardando pagamento
+    <b>Pronta entrega</b> = estoque disponível (já líquido de reserva) − reservados aguardando pagamento
     (pedidos pendentes há até 5 dias; os mais antigos são desconsiderados).
     Nenhum produto sai do painel: o que não tem saldo aparece como sob encomenda, com prazo de entrega
     que pode aumentar em média +15 dias. <b>Item obsoleto</b> = sem saldo e sem venda há mais de 1 ano
@@ -483,10 +483,10 @@ function render(){
 function quebra(p){
   const t=[];
   if(p.pend>0) t.push('<span class="pend">'+p.pend+' reservado(s) aguardando pagamento</span>');
-  if(p.res>0) t.push(p.res+' reservado na Bitech (já descontado)');
+  if(p.res>0) t.push(p.res+' reservado no estoque (já descontado)');
   if(!t.length) return '';
   const link=(p.pedPend&&p.pedPend.length)?'<br><button type="button" class="verped" data-ped="'+esc(p.sku)+'">clique aqui para visualizar os pedidos pendentes</button>':'';
-  return '<div class="quebra">'+p.est+' disponível na Bitech, '+t.join(', ')+link+'</div>';
+  return '<div class="quebra">'+p.est+' disponível em estoque, '+t.join(', ')+link+'</div>';
 }
 function classeQtd(s){return s==='PRONTA'?'ok':s==='SIMILARES'?'baixo':s==='ULTIMAS'?'critico':'zero';}
 const ROTULO={PRONTA:'pronta entrega',SIMILARES:'consulte similares',ULTIMAS:'últimas unidades',ENCOMENDA:'sob encomenda'};
