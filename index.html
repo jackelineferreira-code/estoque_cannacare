@@ -483,7 +483,6 @@ function render(){
 function quebra(p){
   const t=[];
   if(p.pend>0) t.push('<span class="pend">'+p.pend+' reservado(s) aguardando pagamento</span>');
-  if(p.res>0) t.push(p.res+' reservado no estoque (já descontado)');
   if(!t.length) return '';
   const link=(p.pedPend&&p.pedPend.length)?'<br><button type="button" class="verped" data-ped="'+esc(p.sku)+'">clique aqui para visualizar os pedidos pendentes</button>':'';
   return '<div class="quebra">'+p.est+' disponível em estoque, '+t.join(', ')+link+'</div>';
