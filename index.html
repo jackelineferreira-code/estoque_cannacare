@@ -213,7 +213,7 @@ footer{border-top:1px solid var(--linha);margin-top:26px;padding-top:14px;font-s
     Nenhum produto sai do painel: o que não tem saldo aparece como sob encomenda, com prazo de entrega
     que pode aumentar em média +15 dias. <b>Item obsoleto</b> = sem saldo e sem venda há mais de 1 ano
     (ou nunca vendido): confirmar com a equipe de Logística antes de oferecer.
-    <b>Direto do fornecedor</b> (azul) = marcas que o fornecedor entrega direto, sem estoque nosso: a disponibilidade é a que consta na loja.
+    <b>Direto do fornecedor</b> (azul) = marcas que o fornecedor entrega direto, sem estoque nosso.
     <b>Sob encomenda</b> não é falta: é prazo maior de entrega. De 1 a 5 unidades vale oferecer
     o equivalente com mais saldo, para girar o que está parado.
     <b>Indisponível, não fazer encomenda</b> (em vermelho) = produto sem saldo que não pode ser encomendado: oferecer um similar.
@@ -535,7 +535,7 @@ function cartao(p){
     ? '<div class="faixa"><span class="aviso-obs">⚠ ITEM OBSOLETO — confirmar com a equipe de Logística</span></div>' : '';
   const prazo = ind
     ? '<div class="aviso-indisp">⛔ Indisponível - não fazer encomenda</div>'
-    : p.status==='FORNECEDOR' ? '<div class="aviso-forn">📦 Produtos entregues diretamente pelo fornecedor — disponibilidade conforme a loja</div>'
+    : p.status==='FORNECEDOR' ? '<div class="aviso-forn">📦 Produtos entregues diretamente pelo fornecedor</div>'
     : (p.disp<=0 && !p.susp) ? '<div class="aviso-prazo">⏱ Prazo pode aumentar em média +15 dias</div>' : '';
   return '<article class="item '+(CORCLASSE[p.funcao]||'')+(p.disp<=0&&p.status!=='FORNECEDOR'?' esgotado':'')+(p.obs?' obsoleto':'')+(p.susp?' suspenso':'')+(ind?' indisponivel':'')+'">'+
     '<div class="cabeca" tabindex="0" role="button" aria-expanded="false">'+
@@ -595,7 +595,7 @@ function esc(s){return (s===null||s===undefined?'':String(s)).replace(/[&<>"']/g
 function copiar(p){
   const l=[p.desc,(p.sku?'SKU '+p.sku:'SKU: não cadastrado na loja'),'','Composição: '+p.canab+' ('+p.espectro+')',
     'Apresentação: '+apres(p), p.mgml?'Concentração: '+fmt(p.mgml)+' mg/mL':'',
-    'Uso: '+p.via,'Como usar: '+p.poso,'',(p.preco?'Preço: '+brl(p.preco):''),'Disponibilidade hoje: '+(p.susp?'SUSPENSO, não vender':indisp(p)?'indisponível, não fazer encomenda':p.status==='FORNECEDOR'?'entregue diretamente pelo fornecedor, disponibilidade conforme a loja':p.disp>0?p.disp+' unidade(s) em pronta entrega':'sob encomenda, prazo de entrega pode aumentar em média +15 dias')];
+    'Uso: '+p.via,'Como usar: '+p.poso,'',(p.preco?'Preço: '+brl(p.preco):''),'Disponibilidade hoje: '+(p.susp?'SUSPENSO, não vender':indisp(p)?'indisponível, não fazer encomenda':p.status==='FORNECEDOR'?'entregue diretamente pelo fornecedor':p.disp>0?p.disp+' unidade(s) em pronta entrega':'sob encomenda, prazo de entrega pode aumentar em média +15 dias')];
   if(p.disp>0&&p.cob!==null&&p.cob!==undefined&&p.cob<=30) l.push('Atenção: no ritmo atual acaba em cerca de '+p.cob+' dias');
   if(p.disp<=5&&p.subs&&p.subs.length) l.push('Equivalente pronta entrega: '+p.subs[0].desc+' ('+p.subs[0].disp+' un.'+(p.subs[0].preco?', '+brl(p.subs[0].preco):'')+')');
   const txt=l.filter(x=>x!=='').join('\n');
